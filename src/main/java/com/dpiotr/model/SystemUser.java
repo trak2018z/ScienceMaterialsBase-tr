@@ -3,6 +3,7 @@ package com.dpiotr.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by dpiotr on 26.10.17.
@@ -25,6 +26,8 @@ public class SystemUser implements Serializable {
     private String email;
     @Column(name = "password")
     private String password;
+    @OneToMany(mappedBy = "systemUser",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private Set<Comment> comments;
 
     public SystemUser(String name, String surname, String email) {
         this.name = name;
@@ -66,6 +69,10 @@ public class SystemUser implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
     }
 
     @Override

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class FileUploadController {
         this.storageService = storageService;
     }
 
-    @GetMapping("/upload")
+    /*@GetMapping("/upload")
     public String listUploadedFiles(Model model) throws IOException {
 
         Iterable<File> result = fileRepository.findAll();
@@ -48,6 +49,11 @@ public class FileUploadController {
         model.addAttribute("files", links);
 
         return "upload";
+    }*/
+
+    @GetMapping("/files")
+    public ModelAndView getFiles(){
+        return new ModelAndView("upload","files",fileRepository.findAll());
     }
 
     @GetMapping("/files/{filename:.+}")
@@ -59,20 +65,18 @@ public class FileUploadController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
-    @PostMapping("/upload")
+    @PostMapping("/files")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
-
         File fileToSave = new File(file.getName(), "/files/" + file.getOriginalFilename());
         storageService.store(file);
         fileRepository.save(fileToSave);
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
-
         return "redirect:/upload";
     }
 
-    @DeleteMapping("/deleteFile")
+    @DeleteMapping("/files")
     @ResponseBody
     public ResponseEntity<File> deleteFile(@RequestParam("id") Long id) {
 

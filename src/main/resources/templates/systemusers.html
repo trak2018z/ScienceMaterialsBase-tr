@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Uploaded Files</title>
+    <title>Users</title>
     <meta charset="utf-8"></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -11,31 +11,28 @@
 <body>
 
 <div class="container">
-    <div th:if="${message}">
-        <h2 th:text="${message}"/>
-    </div>
-    <h2>Uploaded Files</h2>
-    <p>List of uploaded files:</p>
+    <h2>Users</h2>
+    <p>List of users:</p>
     <div class="container">
         <table class="table">
             <thead>
             <tr>
                 <th>id</th>
                 <th>Name</th>
-                <th>Url</th>
+                <th>Surname</th>
                 <th>Delete</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="file : ${files}">
+            <tr th:each="systemuser : ${systemusers}">
                 <td>
-                    <span th:text="${file.id}"></span>
+                    <span th:text="${systemuser.id}"></span>
                 </td>
                 <td>
-                    <span th:text="${file.name}"></span>
+                    <span th:text="${systemuser.name}"></span>
                 </td>
                 <td>
-                    <span><a th:href="${file.url}" th:text="${file.url}" /></span>
+                    <span th:text="${systemuser.surname}"></span>
                 </td>
                 <td>
                     <span th:text="X"> </span>
@@ -44,18 +41,6 @@
             </tbody>
         </table>
     </div>
-    <form method="POST" enctype="multipart/form-data" action="/upload">
-        <table><tr><td>File to upload: </td><td th:text="${file}"></td></tr></table>
-        <br></br>
-        <label class="btn btn-default btn-file">
-            Choose File <input type="file" name="file" style="display: none;"></input>
-        </label>
-        <label class="btn btn-success btn-file">
-            Upload <input type="submit" value="Upload" style="display: none;"></input>
-        </label>
-    </form>
 </div>
-
-
 </body>
 </html>
