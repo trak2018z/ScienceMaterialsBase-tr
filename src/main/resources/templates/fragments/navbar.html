@@ -1,0 +1,44 @@
+<nav class="navbar navbar-default" xmlns:th="http://www.thymeleaf.org">
+    <div class="navbar-header" >
+        <a class="navbar-brand" href="/" >Science Materials Base</a>
+    </div>
+
+    <div th:if="${beans.currentSystemUser.isLogged()}">
+        <ul class="nav navbar-nav" >
+            <th:block th:if="${beans.currentSystemUser.isStudent()}">
+                <li><a href="/files">Files</a></li>
+            </th:block>
+            <th:block th:if="${beans.currentSystemUser.isAdmin()}">
+                <li><a href="/files">Files</a></li>
+                <li><a href="/subjects">Subjects</a></li>
+                <li><a href="/systemgroups">Groups</a></li>
+                <li><a href="/systemusers">Users</a></li>
+            </th:block>
+        </ul>
+        <div class="navbar-collapse collapse navbar-right">
+            <ul class="nav navbar-nav ">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
+                        <span th:text="${beans.currentSystemUser.systemUser.name}"></span>
+                        <span th:text="${beans.currentSystemUser.systemUser.surname}"></span>
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Edytuj profil</a></li>
+                        <li><a href="/logout">Wyloguj</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div th:unless="${beans.currentSystemUser.isLogged()}">
+        <ul class="nav navbar-nav" >
+            <li><a href="/login">Logowanie</a></li>
+            <li><a href="/register">Rejestracja</a></li>
+        </ul>
+    </div>
+
+
+
+</nav>

@@ -10,5 +10,7 @@ public interface SystemUserRepository extends CrudRepository<SystemUser, Long> {
 
     List<SystemUser> findBySurname(String surname);
 
-    List<SystemUser> findByEmail(String email);
+    SystemUser findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }

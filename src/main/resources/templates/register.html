@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Science Materials Base</title>
+    <th:block th:include="fragments/inclusion"/>
+</head>
+<body>
+<nav class="navbar navbar-default" th:replace="fragments/navbar" ></nav>
+<div class="container">
+    <h1>Rejestracja</h1>
+    <form action="#" th:action="@{/register}" th:object="${model}" class="form-horizontal" role="form" method="POST">
+
+        <div class="alert alert-danger alert-dismissible fade in" role="alert" th:if="${#fields.hasErrors('${model}')}">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Formularz posiada błędy!</strong><br/>
+            <li th:each="e : ${#fields.errors('${model}')}" th:text="${e}"></li>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">E-mail:</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" placeholder="Podaj swój e-mail" th:field="*{email}" />
+                <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Hasło:</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="password" placeholder="Podaj hasło" th:field="*{password}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Powtórz hasło:</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="password" placeholder="Podaj hasło ponownie" th:field="*{passwordRepeat}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('passwordRepeat')}" th:errors="*{passwordRepeat}" ></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" >Imię:</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" placeholder="Podaj swoje imię" th:field="*{firstName}"/>
+                <span class="text-danger"  th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Nazwisko:</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" placeholder="Podaj swoje nazwisko" th:field="*{lastName}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary btn-lg">Zarejestruj się</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

@@ -26,6 +26,8 @@ public class SystemUser implements Serializable {
     private String email;
     @Column(name = "password")
     private String password;
+    @Column(name = "role")
+    private String role;
     @OneToMany(mappedBy = "systemUser",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private Set<Comment> comments;
 
@@ -35,7 +37,7 @@ public class SystemUser implements Serializable {
         this.email = email;
     }
 
-    protected SystemUser() {
+    public SystemUser() {
 
     }
 
@@ -73,6 +75,26 @@ public class SystemUser implements Serializable {
 
     public Set<Comment> getComments() {
         return comments;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override

@@ -70,12 +70,10 @@ public class SystemUserController {
     }
 
     @RequestMapping(value = "/systemusers/findByEmail", method = RequestMethod.GET)
-    public ResponseEntity<List<SystemUser>> findByEmail(@RequestParam("email") String email) {
+    public ResponseEntity<SystemUser> findByEmail(@RequestParam("email") String email) {
 
-        Iterable<SystemUser> result = systemUserRepository.findByEmail(email);
-        List<SystemUser> systemUsers = new ArrayList<>();
-        result.forEach(systemUsers::add);
-        return new ResponseEntity<List<SystemUser>>(systemUsers, HttpStatus.OK);
+        SystemUser result = systemUserRepository.findByEmail(email);
+        return new ResponseEntity<SystemUser>(result, HttpStatus.OK);
 
     }
 

@@ -73,7 +73,7 @@ public class FileUploadController {
         fileRepository.save(fileToSave);
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
-        return "redirect:/upload";
+        return "redirect:/files";
     }
 
     @DeleteMapping("/files")

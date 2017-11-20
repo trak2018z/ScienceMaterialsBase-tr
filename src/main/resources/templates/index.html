@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Science Materials Base</title>
+    <th:block th:include="fragments/inclusion"/>
+
+
+
+</head>
+<body>
+<nav class="navbar navbar-default" th:replace="fragments/navbar" ></nav>
+<div th:replace="fragments/alert"></div>
+<div class="container" th:if="${beans.currentSystemUser.isLogged()}">
+    <h1>Witaj <span th:text="${beans.currentSystemUser.systemUser.name}"></span>!</h1>
+</div>
+<div class="container" th:unless="${beans.currentSystemUser.isLogged()}">
+    <h1>Witaj!</h1>
+    <a href="/register" class="btn btn-primary btn-lg" role="button"> Zarejestruj się</a>
+    <a href="/login" class="btn btn-primary btn-lg" role="button"> Zaloguj się</a>
+</div>
+</body>
+</html>
