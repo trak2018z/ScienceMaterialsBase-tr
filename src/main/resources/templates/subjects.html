@@ -9,7 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-default" th:replace="fragments/navbar" ></nav>
+<nav class="navbar navbar-default" th:replace="fragments/navbar"></nav>
 <div class="container">
     <h2>Subjects</h2>
     <p>List of subjects:</p>
@@ -19,6 +19,8 @@
             <tr>
                 <th>id</th>
                 <th>Name</th>
+                <th>Description</th>
+                <th>Edit</th>
                 <th>Delete</th>
             </tr>
             </thead>
@@ -31,12 +33,42 @@
                     <span th:text="${subject.name}"></span>
                 </td>
                 <td>
-                    <span th:text="X"> </span>
+                    <span th:text="${subject.description}"></span>
+                </td>
+                <td>
+                    <a th:href="@{/subjects/edit(id=${subject.id})}" class="btn btn-default btn-xs">Edytuj</a>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#cancelModal"
+                            th:attr="data-target=${'#deleteModal' + subject.id}">Usuń
+                    </button>
+                    <div class="modal fade" id="myModal" th:attr="id=${'deleteModal' + subject.id}" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Usuń</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Na pewno chcesz usunąć: "<span th:text="${subject.name}"></span>" ? </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="#" th:action="@{/subjects/delete}" role="form" method="POST">
+                                        <input type="hidden" name="id" th:value="${subject.id}"/>
+                                        <button type="submit" class="btn btn-danger">Tak</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Nie</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             </tbody>
         </table>
+
     </div>
+    <a href="/subjects/add" th:href="@{/subjects/add}" class="btn btn-success btn-md">Dodaj przedmiot</a>
 </div>
 </body>
 </html>
