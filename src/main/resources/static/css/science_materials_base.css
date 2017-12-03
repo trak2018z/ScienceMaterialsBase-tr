@@ -1,0 +1,27 @@
+body, html {
+    height: 100%;
+}
+
+.container-bg {
+    /* The image used */
+    background-image: url("/background.jpg");
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.smb .navbar-brand {
+  height: 80px;
+}
+
+.smb .nav >li >a {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-right: 20px;
+}
+

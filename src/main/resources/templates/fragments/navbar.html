@@ -1,8 +1,12 @@
-<nav class="navbar navbar-default" xmlns:th="http://www.thymeleaf.org">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="/">Science Materials Base</a>
+<div class="smb">
+<nav class="navbar navbar-inverse navbar-static-top" xmlns:th="http://www.thymeleaf.org">
+    <div class="navbar-header"  >
+        <a class="navbar-brand" href="/">
+            <img th:src="@{/img/logo.png}" alt="Science Materials Base"></img>
+        </a>
     </div>
-
+    <h3 style="float:left;color:#FFFFFF">Science Materials Base</h3>
+    <div class="navbar-collapse collapse navbar-right">
     <div th:if="${beans.currentSystemUser.isLogged()}">
         <ul class="nav navbar-nav">
             <th:block th:if="${beans.currentSystemUser.isStudent()}">
@@ -16,7 +20,6 @@
                 <li><a href="/manage_system_users">Zarządzaj użytkownikami</a></li>
             </th:block>
         </ul>
-        <div class="navbar-collapse collapse navbar-right">
             <ul class="nav navbar-nav ">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -30,15 +33,12 @@
                 </li>
             </ul>
         </div>
-
-    </div>
-
     <div th:unless="${beans.currentSystemUser.isLogged()}">
         <ul class="nav navbar-nav">
             <li><a href="/login">Logowanie</a></li>
             <li><a href="/register">Rejestracja</a></li>
         </ul>
     </div>
-
-
+    </div>
 </nav>
+</div>

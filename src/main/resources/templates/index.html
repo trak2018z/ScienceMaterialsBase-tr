@@ -12,9 +12,11 @@
     <h1>Witaj <span th:text="${beans.currentSystemUser.systemUser.name}"></span>!</h1>
 </div>
 <div class="container" th:unless="${beans.currentSystemUser.isLogged()}">
-    <h1>Witaj!</h1>
-    <a href="/register" class="btn btn-primary btn-lg" role="button"> Zarejestruj się</a>
-    <a href="/login" class="btn btn-primary btn-lg" role="button"> Zaloguj się</a>
+    <div class="span6" style="float: none; margin: 0 auto;">
+        <h1>Witaj!</h1>
+    </div>
+    <a href="/register" class="btn btn-primary btn-md" role="button"> Zarejestruj się</a>
+    <a href="/login" class="btn btn-primary btn-md" role="button"> Zaloguj się</a>
 </div>
 </body>
 </html>
