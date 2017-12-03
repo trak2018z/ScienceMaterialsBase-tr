@@ -2,6 +2,7 @@ package com.dpiotr.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,6 +19,9 @@ public class Subject implements Serializable {
     private String name;
     @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "subject",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<File> files;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "subject_to_system_group", joinColumns = @JoinColumn(name = "subject_id", referencedColumnName = "id"),
@@ -59,5 +63,17 @@ public class Subject implements Serializable {
 
     public void setSystemGroups(Set<SystemGroup> systemGroups) {
         this.systemGroups = systemGroups;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<File> files) {
+        this.files = files;
     }
 }

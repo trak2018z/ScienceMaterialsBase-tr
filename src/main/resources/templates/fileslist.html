@@ -64,7 +64,7 @@
             </tr>
             </tbody>
         </table>
-        <form method="POST" enctype="multipart/form-data" action="/files">
+        <form id="form" method="POST" enctype="multipart/form-data" th:action="@{/files/subjectid(id=${param.id[0]})}">
             <div class="fileinput fileinput-new" data-provides="fileinput">
                 <span class="btn btn-default btn-file"><span>Choose file</span><input type="file" name="file"/></span>
                 <span class="fileinput-filename"></span><span class="fileinput-new">No file chosen</span>

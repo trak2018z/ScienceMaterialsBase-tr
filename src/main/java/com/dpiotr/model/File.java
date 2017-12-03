@@ -1,6 +1,9 @@
 package com.dpiotr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -17,6 +20,11 @@ public class File implements Serializable {
     private String name;
     @Column(name = "url", nullable = false)
     private String url;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "subject_id")
+    private Subject subject;
 
     protected File(){
     }
@@ -40,5 +48,25 @@ public class File implements Serializable {
 
     public String getUrl() {
         return url;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public String getSubjectName() {
+        return "asa";
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 }

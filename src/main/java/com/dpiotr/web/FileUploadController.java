@@ -5,7 +5,10 @@ package com.dpiotr.web;
  */
 
 import com.dpiotr.model.File;
+import com.dpiotr.model.Subject;
+import com.dpiotr.model.viewmodels.FileViewModel;
 import com.dpiotr.repository.FileRepository;
+import com.dpiotr.repository.SubjectRepository;
 import com.dpiotr.storage.StorageFileNotFoundException;
 import com.dpiotr.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +18,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,25 +37,15 @@ public class FileUploadController {
     @Autowired
     FileRepository fileRepository;
 
+    @Autowired
+    SubjectRepository subjectRepository;
+
     private final StorageService storageService;
 
     @Autowired
     public FileUploadController(StorageService storageService) {
         this.storageService = storageService;
     }
-
-    /*@GetMapping("/upload")
-    public String listUploadedFiles(Model model) throws IOException {
-
-        Iterable<File> result = fileRepository.findAll();
-        List<File> users = new ArrayList<>();
-        result.forEach(users::add);
-        List<String> links = users.stream().
-                map(File::getUrl).collect(Collectors.toList());
-        model.addAttribute("files", links);
-
-        return "upload";
-    }*/
 
     @GetMapping("/files")
     public ModelAndView getFiles(){
@@ -70,23 +66,37 @@ public class FileUploadController {
                                    RedirectAttributes redirectAttributes) {
         File fileToSave = new File(file.getName(), "/files/" + file.getOriginalFilename());
         storageService.store(file);
+        //TODO add to unassigned ?
+        Subject subject = subjectRepository.findOne(122L);
+        fileToSave.setSubject(subject);
         fileRepository.save(fileToSave);
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
         return "redirect:/files";
     }
 
-    @DeleteMapping("/files")
-    @ResponseBody
-    public ResponseEntity<File> deleteFile(@RequestParam("id") Long id) {
+    @PostMapping("/files/subjectid")
+    public String handleFileUploadBySubjectId(@RequestParam("file") MultipartFile file,
+                                   @RequestParam("id") Long subjectid,
+                                   RedirectAttributes redirectAttributes) {
+        File fileToSave = new File(file.getName(), "/files/" + file.getOriginalFilename());
+        storageService.store(file);
+        Subject subject = subjectRepository.findOne(subjectid);
+        fileToSave.setSubject(subject);
+        fileRepository.save(fileToSave);
+        redirectAttributes.addFlashAttribute("message",
+                "You successfully uploaded " + file.getOriginalFilename() + "!");
+        return "redirect:/subjectslist/byId?id=" + subjectid;
+    }
 
+
+    @RequestMapping(value = "/files/delete", method = RequestMethod.POST)
+    public ModelAndView deleteSubject(@RequestParam("id") Long id) {
         File file = fileRepository.findOne(id);
-        //java.io.File fileToDelete = Paths.get(file.getUrl().substring(7)).toFile();
         String filename = file.getUrl().substring(7);
         storageService.deleteOne(filename);
         fileRepository.delete(id);
-
-        return new ResponseEntity<File>(HttpStatus.OK);
+        return new ModelAndView("redirect:/files");
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)

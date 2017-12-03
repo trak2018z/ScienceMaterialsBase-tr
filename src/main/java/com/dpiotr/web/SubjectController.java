@@ -2,6 +2,7 @@ package com.dpiotr.web;
 
 import com.dpiotr.model.Subject;
 import com.dpiotr.model.viewmodels.SubjectViewModel;
+import com.dpiotr.repository.FileRepository;
 import com.dpiotr.repository.SubjectRepository;
 import com.dpiotr.services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,22 @@ public class SubjectController {
     @Autowired
     SubjectService subjectService;
 
+    @Autowired
+    FileRepository fileRepository;
+
     @GetMapping("/subjects")
     public ModelAndView getSubjects() {
         return new ModelAndView("subjects", "subjects", subjectRepository.findAll());
+    }
+
+    @GetMapping("/subjectslist")
+    public ModelAndView getSubjectsList() {
+        return new ModelAndView("subjectslist", "subjects", subjectRepository.findAll());
+    }
+
+    @GetMapping("/subjectslist/byId")
+    public ModelAndView getSubjectsList(@RequestParam("id") Long id) {
+        return new ModelAndView("fileslist", "files", fileRepository.findAllBySubjectId(id));
     }
 
     @GetMapping("/subjects/add")
