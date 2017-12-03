@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Subjects</title>
+    <title>Przedmioty</title>
     <meta charset="utf-8"></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -11,15 +11,14 @@
 <body>
 <nav class="navbar navbar-default" th:replace="fragments/navbar"></nav>
 <div class="container">
-    <h2>Subjects</h2>
-    <p>List of subjects:</p>
+    <h2>Przedmioty</h2>
     <div class="container">
         <table class="table">
             <thead>
             <tr>
                 <th>id</th>
-                <th>Name</th>
-                <th>Description</th>
+                <th>Nazwa</th>
+                <th>Opis</th>
             </tr>
             </thead>
             <tbody>
@@ -28,7 +27,7 @@
                     <span th:text="${subject.id}"></span>
                 </td>
                 <td>
-                    <span><a th:href="@{subjectslist/byId(id=${subject.id})}" th:text="${subject.name}"/></span>
+                    <span><a th:href="@{files/by_subject_id(id=${subject.id})}" th:text="${subject.name}"/></span>
                 </td>
                 <td>
                     <span th:text="${subject.description}"></span>

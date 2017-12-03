@@ -1,27 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Subjects</title>
+    <title>Przedmioty</title>
     <meta charset="utf-8"></meta>
-    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <th:block th:include="fragments/inclusion"/>
 </head>
 <body>
 <nav class="navbar navbar-default" th:replace="fragments/navbar"></nav>
 <div class="container">
-    <h2>Subjects</h2>
-    <p>List of subjects:</p>
+    <h2>Przedmioty</h2>
     <div class="container">
         <table class="table">
             <thead>
             <tr>
                 <th>id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Nazwa</th>
+                <th>Opis</th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -36,7 +32,7 @@
                     <span th:text="${subject.description}"></span>
                 </td>
                 <td>
-                    <a th:href="@{/subjects/edit(id=${subject.id})}" class="btn btn-default btn-xs">Edytuj</a>
+                    <a th:href="@{/manage_subjects/edit(id=${subject.id})}" class="btn btn-default btn-xs">Edytuj</a>
                 </td>
                 <td>
                     <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#cancelModal"
@@ -53,7 +49,7 @@
                                     <p>Na pewno chcesz usunąć: "<span th:text="${subject.name}"></span>" ? </p>
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="#" th:action="@{/subjects/delete}" role="form" method="POST">
+                                    <form action="#" th:action="@{/manage_subjects/delete}" role="form" method="POST">
                                         <input type="hidden" name="id" th:value="${subject.id}"/>
                                         <button type="submit" class="btn btn-danger">Tak</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Nie</button>
@@ -66,9 +62,8 @@
             </tr>
             </tbody>
         </table>
-
     </div>
-    <a href="/subjects/add" th:href="@{/subjects/add}" class="btn btn-success btn-md">Dodaj przedmiot</a>
+    <a href="/subjects/add" th:href="@{/manage_subjects/add}" class="btn btn-success btn-md">Dodaj przedmiot</a>
 </div>
 </body>
 </html>

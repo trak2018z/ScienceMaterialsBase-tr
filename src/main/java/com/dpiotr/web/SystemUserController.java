@@ -21,9 +21,9 @@ public class SystemUserController {
     @Autowired
     SystemUserRepository systemUserRepository;
 
-    @GetMapping("/systemusers")
+    @GetMapping("/manage_system_users")
     public ModelAndView getSystemGroups() {
-        return new ModelAndView("systemusers", "systemusers", systemUserRepository.findAll());
+        return new ModelAndView("manage_system_users", "system_users", systemUserRepository.findAll());
     }
 
     @RequestMapping(value = "/systemusers", method = RequestMethod.POST)

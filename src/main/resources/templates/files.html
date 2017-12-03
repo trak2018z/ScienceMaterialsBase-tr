@@ -2,24 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Science Materials Base</title>
+    <title>Pliki</title>
     <th:block th:include="fragments/inclusion"/>
 </head>
 <body>
 <nav class="navbar navbar-default" th:replace="fragments/navbar"></nav>
 <div class="container">
     <div th:replace="fragments/alert"></div>
-    <h2>Uploaded Files</h2>
-    <p>List of uploaded files:</p>
+    <h2>Pliki</h2>
     <div class="container">
         <table class="table">
             <thead>
             <tr>
                 <th>id</th>
-                <th>Name</th>
-                <th>Url</th>
-                <th>Subject</th>
-                <th>Delete</th>
+                <th>Nazwa</th>
+                <th>Przedmiot</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -28,10 +26,7 @@
                     <span th:text="${file.id}"></span>
                 </td>
                 <td>
-                    <span th:text="${file.name}"></span>
-                </td>
-                <td>
-                    <span><a th:href="${file.url}" th:text="${file.url}"/></span>
+                    <span><a th:href="@{'/all_files/' +${file.url}}"  th:text="${file.url}"/></span>
                 </td>
                 <td>
                     <span th:text="${file.subject.getName()}"></span>
@@ -51,7 +46,7 @@
                                     <p>Na pewno chcesz usunąć: "<span th:text="${file.name}"></span>" ? </p>
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="#" th:action="@{/files/delete}" role="form" method="POST">
+                                    <form action="#" th:action="@{/all_files/delete}" role="form" method="POST">
                                         <input type="hidden" name="id" th:value="${file.id}"/>
                                         <button type="submit" class="btn btn-danger">Tak</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Nie</button>
@@ -64,14 +59,14 @@
             </tr>
             </tbody>
         </table>
-        <form method="POST" enctype="multipart/form-data" action="/files">
+        <form id="form" method="POST" enctype="multipart/form-data" th:action="@{/all_files/subjectid(id=${param.id[0]})}">
             <div class="fileinput fileinput-new" data-provides="fileinput">
-                <span class="btn btn-default btn-file"><span>Choose file</span><input type="file" name="file"/></span>
-                <span class="fileinput-filename"></span><span class="fileinput-new">No file chosen</span>
+                <span class="btn btn-default btn-file"><span>Wybierz plik</span><input type="file" name="file"/></span>
+                <span class="fileinput-filename"></span><span class="fileinput-new">Nie wybrano pliku...</span>
             </div>
             <br></br>
             <label class="btn btn-success btn-file">
-                Upload <input type="submit" value="Upload" style="display: none;"></input>
+                Wyślij <input type="submit" value="Upload" style="display: none;"></input>
             </label>
         </form>
     </div>

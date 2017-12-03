@@ -6,13 +6,14 @@
     <div th:if="${beans.currentSystemUser.isLogged()}">
         <ul class="nav navbar-nav">
             <th:block th:if="${beans.currentSystemUser.isStudent()}">
-                <li><a href="/files">Files</a></li>
+                <li><a href="/all_files">Wszystkie pliki</a></li>
+                <li><a href="/files_by_subject">Przeglądaj pliki</a></li>
             </th:block>
             <th:block th:if="${beans.currentSystemUser.isAdmin()}">
-                <li><a href="/files">Files</a></li>
-                <li><a href="/subjects">Subjects</a></li>
-                <li><a href="/systemgroups">Groups</a></li>
-                <li><a href="/systemusers">Users</a></li>
+                <li><a href="/all_files">Wszystkie pliki</a></li>
+                <li><a href="/files_by_subject">Zarządzaj plikami</a></li>
+                <li><a href="/manage_subjects">Zarządzaj przedmiotami</a></li>
+                <li><a href="/manage_system_users">Zarządzaj użytkownikami</a></li>
             </th:block>
         </ul>
         <div class="navbar-collapse collapse navbar-right">

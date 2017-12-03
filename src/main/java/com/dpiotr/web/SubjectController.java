@@ -27,58 +27,43 @@ public class SubjectController {
     @Autowired
     SubjectService subjectService;
 
-    @Autowired
-    FileRepository fileRepository;
-
-    @GetMapping("/subjects")
+    @GetMapping("/manage_subjects")
     public ModelAndView getSubjects() {
-        return new ModelAndView("subjects", "subjects", subjectRepository.findAll());
+        return new ModelAndView("manage_subjects", "subjects", subjectRepository.findAll());
     }
 
-    @GetMapping("/subjectslist")
+    @GetMapping("/files_by_subject")
     public ModelAndView getSubjectsList() {
-        return new ModelAndView("subjectslist", "subjects", subjectRepository.findAll());
+        return new ModelAndView("files_by_subject", "subjects", subjectRepository.findAll());
     }
 
-    @GetMapping("/subjectslist/byId")
-    public ModelAndView getSubjectsList(@RequestParam("id") Long id) {
-        return new ModelAndView("fileslist", "files", fileRepository.findAllBySubjectId(id));
-    }
-
-    @GetMapping("/subjects/add")
+    @GetMapping("/manage_subjects/add")
     public ModelAndView addSubjectForm() {
         return new ModelAndView("add_subject", "subject", new SubjectViewModel());
     }
 
-    @PostMapping("/subjects/add")
+    @PostMapping("/manage_subjects/add")
     public ModelAndView addSubject(@Valid @ModelAttribute("subject") SubjectViewModel subject, final BindingResult result, final RedirectAttributes redirectAttributes) {
         subjectService.addSubject(subject);
-        //redirectAttributes.addFlashAttribute("message", "Dodano poprawnie.");
-        return new ModelAndView("redirect:/subjects");
+        redirectAttributes.addFlashAttribute("message", "Dodano poprawnie.");
+        return new ModelAndView("redirect:/manage_subjects");
     }
 
-    @PostMapping("/subjects/edit")
+    @PostMapping("/manage_subjects/edit")
     public ModelAndView editSubject(@RequestParam("id") Long id, @Valid @ModelAttribute("subject") SubjectViewModel subject, final BindingResult result, final RedirectAttributes redirectAttributes) {
         Subject subjectToUpdate = subjectRepository.findOne(id);
         subjectService.editSubject(subjectToUpdate, subject);
-        return new ModelAndView("redirect:/subjects");
+        return new ModelAndView("redirect:/manage_subjects");
     }
 
-    @GetMapping("/subjects/edit")
+    @GetMapping("/manage_subjects/edit")
     public ModelAndView editSubject(@RequestParam("id") Long id) {
         return new ModelAndView("edit_subject", "subject", subjectRepository.findById(id));
     }
 
-    @RequestMapping(value = "/subjects/delete", method = RequestMethod.POST)
+    @PostMapping("/manage_subjects/delete")
     public ModelAndView deleteSubject(@RequestParam("id") Long id) {
         subjectRepository.delete(id);
-        return new ModelAndView("redirect:/subjects");
+        return new ModelAndView("redirect:/manage_subjects");
     }
-
-    @RequestMapping(value = "/subjects/delete", method = RequestMethod.DELETE)
-    public ResponseEntity<Subject> redirectToListOfSubjects(@RequestParam("id") Long id) {
-        subjectRepository.delete(id);
-        return new ResponseEntity<Subject>(HttpStatus.OK);
-    }
-
 }

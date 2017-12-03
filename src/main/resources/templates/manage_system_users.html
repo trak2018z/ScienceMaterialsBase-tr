@@ -1,32 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Users</title>
+    <title>Użytkownicy</title>
     <meta charset="utf-8"></meta>
-    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <th:block th:include="fragments/inclusion"/>
 </head>
 <body>
 <nav class="navbar navbar-default" th:replace="fragments/navbar"></nav>
 <div class="container">
-    <h2>Users</h2>
-    <p>List of users:</p>
+    <h2>Użytkownicy</h2>
     <div class="container">
         <table class="table">
             <thead>
             <tr>
                 <th>id</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Delete</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>E-mail</th>
+                <th>Rola</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="systemuser : ${systemusers}">
+            <tr th:each="systemuser : ${system_users}">
                 <td>
                     <span th:text="${systemuser.id}"></span>
                 </td>
