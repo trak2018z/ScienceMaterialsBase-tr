@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class CurrentSystemUser {
-    private SystemUser systemUser;
 
+    private SystemUser systemUser;
     private SystemUserRepository systemUserRepository;
 
     @Autowired

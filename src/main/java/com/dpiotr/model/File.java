@@ -1,7 +1,5 @@
 package com.dpiotr.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,10 +13,15 @@ public class File implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private Long id;
-    @Column(name = "name", nullable = false)
+
+    @Column(name = "name")
+    @NotNull
     private String name;
-    @Column(name = "url", nullable = false)
+
+    @Column(name = "url")
+    @NotNull
     private String url;
 
     @NotNull
@@ -26,12 +29,12 @@ public class File implements Serializable {
     @JoinColumn(name = "subject_id")
     private Subject subject;
 
-    protected File(){
-    }
-
     public File(String name, String url) {
         this.name = name;
         this.url = url;
+    }
+
+    protected File() {
     }
 
     public Long getId() {
@@ -60,10 +63,6 @@ public class File implements Serializable {
 
     public Subject getSubject() {
         return subject;
-    }
-
-    public String getSubjectName() {
-        return "asa";
     }
 
     public void setSubject(Subject subject) {

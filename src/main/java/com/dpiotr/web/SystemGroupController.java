@@ -18,9 +18,10 @@ public class SystemGroupController {
     SystemGroupRepository systemGroupRepository;
 
     @GetMapping("/systemgroups")
-    public ModelAndView getSystemGroups(){
-        return new ModelAndView("systemgroups","systemgroups",systemGroupRepository.findAll());
+    public ModelAndView getSystemGroups() {
+        return new ModelAndView("systemgroups", "systemgroups", systemGroupRepository.findAll());
     }
+
     @RequestMapping(value = "/systemgroups", method = RequestMethod.POST)
     public ResponseEntity<SystemGroup> addSystemGroup(@RequestBody SystemGroup systemGroup) {
         systemGroupRepository.save(systemGroup);

@@ -1,6 +1,7 @@
 package com.dpiotr.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -13,12 +14,15 @@ public class SystemGroup implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private Long id;
+
+    @NotNull
     @Column(name = "name")
     private String name;
+
     @Column(name = "description")
     private String description;
-
 
     @ManyToMany(mappedBy = "systemGroups", cascade = CascadeType.ALL)
     private Set<Subject> subjects;
@@ -29,7 +33,6 @@ public class SystemGroup implements Serializable {
     }
 
     protected SystemGroup() {
-
     }
 
     public String getName() {

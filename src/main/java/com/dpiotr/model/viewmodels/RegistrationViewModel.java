@@ -13,18 +13,17 @@ import javax.validation.constraints.Size;
 @EqualProperties(value = {"password", "passwordRepeat"}, message = "{Passwords.dontMatch}")
 public class RegistrationViewModel {
 
-
     @Pattern(regexp = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-+]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "{Email.invalidEmail}")
     @Size(max = 255, message = "{Size.email}")
     private String email;
 
     @NotBlank(message = "{NotEmpty.message}")
-    @Size(max = 32, message = "{Size.firstName}")
-    private String firstName;
+    @Size(max = 32, message = "{Size.name}")
+    private String name;
 
     @NotBlank(message = "{NotEmpty.message}")
-    @Size(max = 32, message = "{Size.lastName}")
-    private String lastName;
+    @Size(max = 32, message = "{Size.surname}")
+    private String surname;
 
     @Size(min = 8, message = "{Size.password}")
     private String password;
@@ -40,20 +39,20 @@ public class RegistrationViewModel {
         this.email = email;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getPassword() {

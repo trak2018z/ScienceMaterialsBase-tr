@@ -34,33 +34,33 @@ public class RegistrationController {
     }
 
     @RequestMapping("/register")
-    public ModelAndView register(){
-        if(loginService.userIsLogged()){
+    public ModelAndView register() {
+        if (loginService.userIsLogged()) {
             return new ModelAndView("redirect:/");
         }
-        return new ModelAndView("register","model",new RegistrationViewModel());
+        return new ModelAndView("register", "model", new RegistrationViewModel());
     }
 
     private RegistrationService registrationService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView registerUser(@Valid @ModelAttribute("model") RegistrationViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes){
-        if(loginService.userIsLogged()){
+    public ModelAndView registerUser(@Valid @ModelAttribute("model") RegistrationViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes) {
+        if (loginService.userIsLogged()) {
             return new ModelAndView("redirect:/");
         }
-        if(model !=null){
-            if(systemUserRepository.existsByEmail(model.getEmail())){
-                result.rejectValue("email","error.RegistrationError","Konto o takim adresie już istnieje.");
+        if (model != null) {
+            if (systemUserRepository.existsByEmail(model.getEmail())) {
+                result.rejectValue("email", "error.RegistrationError", "Konto o takim adresie już istnieje.");
 
             }
         }
 
-        if(result.hasErrors()){
-            return new ModelAndView("/register","model",model);
+        if (result.hasErrors()) {
+            return new ModelAndView("/register", "model", model);
         }
 
         registrationService.registerUser(model);
-        redirectAttributes.addFlashAttribute("message","Zarejestrowano poprawnie. Możesz się zalogować.");
+        redirectAttributes.addFlashAttribute("message", "Zarejestrowano poprawnie. Możesz się zalogować.");
 
         return new ModelAndView("redirect:/login");
     }

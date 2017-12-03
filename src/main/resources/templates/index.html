@@ -4,12 +4,9 @@
     <meta charset="UTF-8"/>
     <title>Science Materials Base</title>
     <th:block th:include="fragments/inclusion"/>
-
-
-
 </head>
 <body>
-<nav class="navbar navbar-default" th:replace="fragments/navbar" ></nav>
+<nav class="navbar navbar-default" th:replace="fragments/navbar"></nav>
 <div th:replace="fragments/alert"></div>
 <div class="container" th:if="${beans.currentSystemUser.isLogged()}">
     <h1>Witaj <span th:text="${beans.currentSystemUser.systemUser.name}"></span>!</h1>

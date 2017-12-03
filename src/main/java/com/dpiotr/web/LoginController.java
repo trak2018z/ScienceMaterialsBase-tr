@@ -27,38 +27,38 @@ public class LoginController {
     }
 
     @RequestMapping("/login")
-    public ModelAndView login(){
-        if(loginService.userIsLogged()){
+    public ModelAndView login() {
+        if (loginService.userIsLogged()) {
             return new ModelAndView("redirect:/");
         }
-        return new ModelAndView("/login","model",new LoginViewModel());
+        return new ModelAndView("/login", "model", new LoginViewModel());
     }
 
-    @RequestMapping(value = "/login",method =  RequestMethod.POST)
-    public ModelAndView logUser(@Valid @ModelAttribute("model")LoginViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes){
-        if(loginService.userIsLogged()){
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ModelAndView logUser(@Valid @ModelAttribute("model") LoginViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes) {
+        if (loginService.userIsLogged()) {
             return new ModelAndView("redirect:/");
         }
 
-        if(!result.hasErrors()){
-            if(loginService.logUser(model)){
-                redirectAttributes.addFlashAttribute("message","Jesteś zalogowany.");
+        if (!result.hasErrors()) {
+            if (loginService.logUser(model)) {
+                redirectAttributes.addFlashAttribute("message", "Jesteś zalogowany.");
                 return new ModelAndView("redirect:/");
-            }else{
-                result.reject("LoginError.incorrectLoginData","Niepoprawne dane logowania.");
+            } else {
+                result.reject("LoginError.incorrectLoginData", "Niepoprawne dane logowania.");
             }
         }
-        return new ModelAndView("/login","model",model);
+        return new ModelAndView("/login", "model", model);
 
     }
 
     @RequestMapping("/logout")
-    public ModelAndView logout(final RedirectAttributes redirectAttributes){
-        if(!loginService.userIsLogged()){
+    public ModelAndView logout(final RedirectAttributes redirectAttributes) {
+        if (!loginService.userIsLogged()) {
             return new ModelAndView("redirect:/");
         }
         loginService.logoutUser();
-        redirectAttributes.addFlashAttribute("message","Wylogowano poprawnie");
+        redirectAttributes.addFlashAttribute("message", "Wylogowano poprawnie");
         return new ModelAndView("redirect:/");
     }
 }

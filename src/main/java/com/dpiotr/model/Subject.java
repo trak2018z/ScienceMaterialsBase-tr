@@ -1,6 +1,7 @@
 package com.dpiotr.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
@@ -14,13 +15,17 @@ public class Subject implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private Long id;
+
+    @NotNull
     @Column(name = "name")
     private String name;
+
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "subject",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<File> files;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -34,7 +39,6 @@ public class Subject implements Serializable {
     }
 
     protected Subject() {
-
     }
 
     public String getName() {

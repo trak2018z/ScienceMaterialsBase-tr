@@ -34,10 +34,8 @@ public class FileSystemStorageService implements StorageService {
                 throw new StorageException("Failed to store empty file " + filename);
             }
             if (filename.contains("..")) {
-                // This is a security check
                 throw new StorageException(
-                        "Cannot store file with relative path outside current directory "
-                                + filename);
+                        "Cannot store file with relative path outside current directory " + filename);
             }
             Files.copy(file.getInputStream(), this.rootLocation.resolve(filename),
                     StandardCopyOption.REPLACE_EXISTING);
@@ -71,9 +69,7 @@ public class FileSystemStorageService implements StorageService {
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
-                throw new StorageFileNotFoundException(
-                        "Could not read file: " + filename);
-
+                throw new StorageFileNotFoundException("Could not read file: " + filename);
             }
         } catch (MalformedURLException e) {
             throw new StorageFileNotFoundException("Could not read file: " + filename, e);

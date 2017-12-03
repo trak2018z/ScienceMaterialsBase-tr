@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by dpiotr on 20.11.17.
  */
+
 @Component
 public class RegistrationService {
 
@@ -20,12 +21,12 @@ public class RegistrationService {
         this.systemUserRepository = systemUserRepository;
     }
 
-    public void registerUser(RegistrationViewModel rvm){
+    public void registerUser(RegistrationViewModel rvm) {
         SystemUser systemUser = new SystemUser();
         systemUser.setEmail(rvm.getEmail());
         systemUser.setPassword(PasswordUtilities.getHashFor(rvm.getPassword()));
-        systemUser.setName(rvm.getFirstName());
-        systemUser.setSurname(rvm.getLastName());
+        systemUser.setName(rvm.getName());
+        systemUser.setSurname(rvm.getSurname());
         systemUser.setRole("student");
         systemUserRepository.save(systemUser);
     }

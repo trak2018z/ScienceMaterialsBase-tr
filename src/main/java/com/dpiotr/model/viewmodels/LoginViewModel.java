@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * Created by dpiotr on 20.11.17.
  */
 public class LoginViewModel {
+
     @NotBlank(message = "{NotEmpty.message}")
     private String email;
 

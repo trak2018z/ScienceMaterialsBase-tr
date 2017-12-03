@@ -6,7 +6,6 @@ package com.dpiotr.web;
 
 import com.dpiotr.model.File;
 import com.dpiotr.model.Subject;
-import com.dpiotr.model.viewmodels.FileViewModel;
 import com.dpiotr.repository.FileRepository;
 import com.dpiotr.repository.SubjectRepository;
 import com.dpiotr.storage.StorageFileNotFoundException;
@@ -14,25 +13,15 @@ import com.dpiotr.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Controller
-public class FileUploadController {
+public class FileController {
 
     @Autowired
     FileRepository fileRepository;
@@ -43,7 +32,7 @@ public class FileUploadController {
     private final StorageService storageService;
 
     @Autowired
-    public FileUploadController(StorageService storageService) {
+    public FileController(StorageService storageService) {
         this.storageService = storageService;
     }
 

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class LoginService {
+
     private SystemUserRepository systemUserRepository;
     private CurrentSystemUser currentSystemUser;
 
@@ -22,24 +23,24 @@ public class LoginService {
         this.currentSystemUser = currentSystemUser;
     }
 
-    public boolean userIsLogged(){
+    public boolean userIsLogged() {
         return currentSystemUser.isLogged();
     }
 
-    public boolean logUser(LoginViewModel model){
+    public boolean logUser(LoginViewModel model) {
         SystemUser user = systemUserRepository.findByEmail(model.getEmail());
-        if(user == null){
+        if (user == null) {
             return false;
         }
 
-        if(PasswordUtilities.validatePassword(model.getPassword(),user.getPassword())){
+        if (PasswordUtilities.validatePassword(model.getPassword(), user.getPassword())) {
             this.currentSystemUser.setSystemUser(user);
             return true;
         }
         return false;
     }
 
-    public void logoutUser(){
+    public void logoutUser() {
         currentSystemUser.logOut();
     }
 }

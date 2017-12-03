@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by dpiotr on 01.12.17.
  */
+
 @Component
 public class SubjectService {
 
@@ -20,7 +21,6 @@ public class SubjectService {
     }
 
     public void addSubject(SubjectViewModel subjectViewModel) {
-
         Subject subjectToSave = new Subject(subjectViewModel.getName(), subjectViewModel.getDescription());
         subjectRepository.save(subjectToSave);
     }

@@ -2,6 +2,7 @@ package com.dpiotr.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -15,20 +16,30 @@ public class SystemUser implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
     private Long id;
-    //@Column(name = "created_at")
-    //private LocalDateTime createdAt;
+
+    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
+
+    @NotNull
     @Column(name = "surname")
     private String surname;
+
+    @NotNull
     @Column(name = "email")
     private String email;
+
+    @NotNull
     @Column(name = "password")
     private String password;
+
+    @NotNull
     @Column(name = "role")
     private String role;
-    @OneToMany(mappedBy = "systemUser",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "systemUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Comment> comments;
 
     public SystemUser(String name, String surname, String email) {
@@ -38,7 +49,6 @@ public class SystemUser implements Serializable {
     }
 
     public SystemUser() {
-
     }
 
     public Long getId() {
@@ -96,9 +106,5 @@ public class SystemUser implements Serializable {
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
-
-    @Override
-    public String toString() {
-        return String.format("SystemUser[id=%d, firstName=%s, secondName=%s, email=%s]", id, name, surname, email);
-    }
+    
 }
