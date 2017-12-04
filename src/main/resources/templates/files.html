@@ -17,7 +17,9 @@
                 <th>id</th>
                 <th>Nazwa</th>
                 <th>Przedmiot</th>
-                <th></th>
+                <th:block th:if="${beans.currentSystemUser.isAdmin()}">
+                    <th></th>
+                </th:block>
             </tr>
             </thead>
             <tbody>
@@ -31,44 +33,48 @@
                 <td>
                     <span th:text="${file.subject.getName()}"></span>
                 </td>
-                <td>
-                    <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#cancelModal"
-                            th:attr="data-target=${'#deleteModal' + file.id}">Usuń
-                    </button>
-                    <div class="modal fade" id="myModal" th:attr="id=${'deleteModal' + file.id}" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Usuń</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Na pewno chcesz usunąć: "<span th:text="${file.name}"></span>" ? </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <form action="#" th:action="@{/all_files/delete}" role="form" method="POST">
-                                        <input type="hidden" name="id" th:value="${file.id}"/>
-                                        <button type="submit" class="btn btn-danger">Tak</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Nie</button>
-                                    </form>
+                <th:block th:if="${beans.currentSystemUser.isAdmin()}">
+                    <td>
+                        <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#cancelModal"
+                                th:attr="data-target=${'#deleteModal' + file.id}">Usuń
+                        </button>
+                        <div class="modal fade" id="myModal" th:attr="id=${'deleteModal' + file.id}" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Usuń</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Na pewno chcesz usunąć: "<span th:text="${file.name}"></span>" ? </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="#" th:action="@{/all_files/delete}" role="form" method="POST">
+                                            <input type="hidden" name="id" th:value="${file.id}"/>
+                                            <button type="submit" class="btn btn-danger">Tak</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Nie</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </td>
+                    </td>
+                </th:block>
             </tr>
             </tbody>
         </table>
-        <form id="form" method="POST" enctype="multipart/form-data" th:action="@{/all_files/subjectid(id=${param.id[0]})}">
-            <div class="fileinput fileinput-new" data-provides="fileinput">
-                <span class="btn btn-default btn-file"><span>Wybierz plik</span><input type="file" name="file"/></span>
-                <span class="fileinput-filename"></span><span class="fileinput-new">Nie wybrano pliku...</span>
-            </div>
-            <br></br>
-            <label class="btn btn-success btn-file">
-                Wyślij <input type="submit" value="Upload" style="display: none;"></input>
-            </label>
-        </form>
+        <th:block th:if="${beans.currentSystemUser.isAdmin()}">
+            <form id="form" method="POST" enctype="multipart/form-data" th:action="@{/all_files/subjectid(id=${param.id[0]})}">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <span class="btn btn-default btn-file"><span>Wybierz plik</span><input type="file" name="file"/></span>
+                    <span class="fileinput-filename"></span><span class="fileinput-new">Nie wybrano pliku...</span>
+                </div>
+                <br></br>
+                <label class="btn btn-success btn-file">
+                    Wyślij <input type="submit" value="Upload" style="display: none;"></input>
+                </label>
+            </form>
+        </th:block>
     </div>
 </div>
 </body>

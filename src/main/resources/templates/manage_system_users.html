@@ -19,27 +19,53 @@
                 <th>E-mail</th>
                 <th>Rola</th>
                 <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="systemuser : ${system_users}">
+            <tr th:each="system_user : ${system_users}">
                 <td>
-                    <span th:text="${systemuser.id}"></span>
+                    <span th:text="${system_user.id}"></span>
                 </td>
                 <td>
-                    <span th:text="${systemuser.name}"></span>
+                    <span th:text="${system_user.name}"></span>
                 </td>
                 <td>
-                    <span th:text="${systemuser.surname}"></span>
+                    <span th:text="${system_user.surname}"></span>
                 </td>
                 <td>
-                    <span th:text="${systemuser.email}"></span>
+                    <span th:text="${system_user.email}"></span>
                 </td>
                 <td>
-                    <span th:text="${systemuser.role}"></span>
+                    <span th:text="${system_user.role}"></span>
                 </td>
                 <td>
-                    <span th:text="X"> </span>
+                    <a th:href="@{/manage_system_users/edit(id=${system_user.id})}" class="btn btn-default btn-xs">Edytuj</a>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#cancelModal"
+                            th:attr="data-target=${'#deleteModal' + system_user.id}">Usuń
+                    </button>
+                    <div class="modal fade" id="myModal" th:attr="id=${'deleteModal' + system_user.id}" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Usuń</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Na pewno chcesz usunąć: "<span th:text="${system_user.name}"></span>" ? </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="#" th:action="@{/manage_system_users/delete}" role="form" method="POST">
+                                        <input type="hidden" name="id" th:value="${system_user.id}"/>
+                                        <button type="submit" class="btn btn-danger">Tak</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Nie</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             </tbody>

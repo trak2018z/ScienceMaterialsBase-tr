@@ -8,8 +8,10 @@ import com.dpiotr.model.File;
 import com.dpiotr.model.Subject;
 import com.dpiotr.repository.FileRepository;
 import com.dpiotr.repository.SubjectRepository;
+import com.dpiotr.services.LoginService;
 import com.dpiotr.storage.StorageFileNotFoundException;
 import com.dpiotr.storage.StorageService;
+import com.dpiotr.utilities.AccessForbiddenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -29,6 +31,9 @@ public class FileController {
     @Autowired
     SubjectRepository subjectRepository;
 
+    @Autowired
+    LoginService loginService;
+
     private final StorageService storageService;
 
     @Autowired
@@ -37,8 +42,10 @@ public class FileController {
     }
 
     @GetMapping("/all_files")
-    public ModelAndView getFiles(){
-        return new ModelAndView("all_files","files",fileRepository.findAll());
+    public ModelAndView getFiles() {
+        if(loginService.userIsLogged()) {
+            return new ModelAndView("all_files", "files", fileRepository.findAll());
+        } else throw new AccessForbiddenException();
     }
 
     @GetMapping("/files/by_subject_id")
