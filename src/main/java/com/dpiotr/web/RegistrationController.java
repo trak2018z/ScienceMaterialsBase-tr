@@ -7,9 +7,7 @@ import com.dpiotr.services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -18,7 +16,7 @@ import javax.validation.Valid;
 /**
  * Created by dpiotr on 20.11.17.
  */
-@Controller
+@RestController
 public class RegistrationController {
 
 
@@ -33,7 +31,7 @@ public class RegistrationController {
         this.loginService = loginService;
     }
 
-    @RequestMapping("/register")
+    @GetMapping("/register")
     public ModelAndView register() {
         if (loginService.userIsLogged()) {
             return new ModelAndView("redirect:/");
@@ -43,7 +41,7 @@ public class RegistrationController {
 
     private RegistrationService registrationService;
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @PostMapping("/register")
     public ModelAndView registerUser(@Valid @ModelAttribute("model") RegistrationViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes) {
         if (loginService.userIsLogged()) {
             return new ModelAndView("redirect:/");
@@ -56,7 +54,7 @@ public class RegistrationController {
         }
 
         if (result.hasErrors()) {
-            return new ModelAndView("/register", "model", model);
+            return new ModelAndView("register", "model", model);
         }
 
         registrationService.registerUser(model);
