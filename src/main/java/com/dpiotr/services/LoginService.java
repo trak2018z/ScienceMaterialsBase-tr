@@ -27,6 +27,8 @@ public class LoginService {
         return currentSystemUser.isLogged();
     }
 
+    public boolean adminIsLogged(){return currentSystemUser.isAdmin();}
+
     public boolean logUser(LoginViewModel model) {
         SystemUser user = systemUserRepository.findByEmail(model.getEmail());
         if (user == null) {

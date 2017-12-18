@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface FileRepository extends CrudRepository<File, Long> {
     List<File> findAllBySubjectId(Long id);
+    boolean existsByUrl(String url);
 }
