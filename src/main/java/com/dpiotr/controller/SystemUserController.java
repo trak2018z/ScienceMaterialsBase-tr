@@ -1,8 +1,6 @@
-package com.dpiotr.web;
+package com.dpiotr.controller;
 
-import com.dpiotr.model.Subject;
 import com.dpiotr.model.SystemUser;
-import com.dpiotr.model.viewmodels.SubjectViewModel;
 import com.dpiotr.model.viewmodels.SystemUserViewModel;
 import com.dpiotr.repository.SystemUserRepository;
 import com.dpiotr.services.SystemUserService;
@@ -53,6 +51,16 @@ public class SystemUserController {
         return new ResponseEntity<List<SystemUser>>(systemUsers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/rest/getAll", method = RequestMethod.GET)
+    public ResponseEntity<List<SystemUser>> getAllByRest() {
+
+        Iterable<SystemUser> result = systemUserRepository.findAll();
+        List<SystemUser> systemUsers = new ArrayList<>();
+        result.forEach(systemUsers::add);
+        return new ResponseEntity<List<SystemUser>>(systemUsers, HttpStatus.OK);
+
+    }
+
     @RequestMapping(value = "/manage_system_users/findById", method = RequestMethod.GET)
     public ResponseEntity<SystemUser> findById(@RequestParam("id") long id) {
         SystemUser systemUser = systemUserRepository.findOne(id);
@@ -95,7 +103,7 @@ public class SystemUserController {
         return new ModelAndView("redirect:/manage_system_users");
     }
 
-    @GetMapping("/manage_system_User/edit")
+    @GetMapping("/manage_system_user/edit")
     public ModelAndView editSubject(@RequestParam("id") Long id) {
         return new ModelAndView("edit_system_user", "system_user", systemUserRepository.findById(id));
     }

@@ -1,4 +1,4 @@
-package com.dpiotr.web;
+package com.dpiotr.controller;
 
 /**
  * Created by dpiotr on 29.10.17.

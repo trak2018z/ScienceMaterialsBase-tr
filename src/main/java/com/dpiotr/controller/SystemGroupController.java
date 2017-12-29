@@ -1,4 +1,4 @@
-package com.dpiotr.web;
+package com.dpiotr.controller;
 
 import com.dpiotr.model.SystemGroup;
 import com.dpiotr.repository.SystemGroupRepository;

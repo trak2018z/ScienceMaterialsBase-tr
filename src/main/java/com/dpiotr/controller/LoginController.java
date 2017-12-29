@@ -1,4 +1,4 @@
-package com.dpiotr.web;
+package com.dpiotr.controller;
 
 import com.dpiotr.model.viewmodels.LoginViewModel;
 import com.dpiotr.services.LoginService;
@@ -14,7 +14,7 @@ import javax.validation.Valid;
 /**
  * Created by dpiotr on 20.11.17.
  */
-@RestController
+@Controller
 public class LoginController {
 
     private LoginService loginService;
@@ -32,7 +32,7 @@ public class LoginController {
         return new ModelAndView("login", "model", new LoginViewModel());
     }
 
-    @PostMapping("/login")
+    @PostMapping("/signup")
     public ModelAndView logUser(@Valid @ModelAttribute("model") LoginViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes) {
         if (loginService.userIsLogged()) {
             return new ModelAndView("redirect:/");

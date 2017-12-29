@@ -1,4 +1,4 @@
-package com.dpiotr.web;
+package com.dpiotr.controller;
 
 import com.dpiotr.model.Subject;
 import com.dpiotr.model.viewmodels.SubjectViewModel;

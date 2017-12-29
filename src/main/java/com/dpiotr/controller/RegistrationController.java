@@ -1,11 +1,10 @@
-package com.dpiotr.web;
+package com.dpiotr.controller;
 
 import com.dpiotr.model.viewmodels.RegistrationViewModel;
 import com.dpiotr.repository.SystemUserRepository;
 import com.dpiotr.services.LoginService;
 import com.dpiotr.services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
