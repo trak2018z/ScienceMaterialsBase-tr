@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -34,23 +35,20 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers("/js/**","/css/**","/fonts/**","/img/**").permitAll()
                 .antMatchers("/*.html","/webjars/**").permitAll()
-                //.antMatchers(SecurityConstants.SIGN_UP_URL).permitAll()
-                //.antMatchers(SecurityConstants.LOGIN_URL).permitAll()
-                .antMatchers("/signup").permitAll()
-                .antMatchers("/login").permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers("/register").permitAll()
-                .antMatchers("/all_files/**").permitAll()
-                .antMatchers("/manage_system_users/**").permitAll()
-                .antMatchers("/manage_subjects/**").permitAll()
-                .antMatchers("/files_by_subject/**").permitAll()
-                .antMatchers("/files/**").permitAll()
+                .antMatchers("/v1/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/v2/api-docs").permitAll()
+                .antMatchers(HttpMethod.GET,"/configuration/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/documentation/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/swagger-resources/**").permitAll()
                 .anyRequest().authenticated()
+                //.and().exceptionHandling()
+                //.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/v1/login"))
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))
                 // this disables session creation on Spring Security
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Override

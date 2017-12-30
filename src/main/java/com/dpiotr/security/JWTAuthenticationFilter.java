@@ -5,20 +5,15 @@ package com.dpiotr.security;
  */
 
 import com.dpiotr.model.SystemUser;
-import com.dpiotr.model.viewmodels.LoginViewModel;
-import com.dpiotr.services.LoginService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -43,16 +38,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest req,
                                                 HttpServletResponse res) throws AuthenticationException {
 
-        /*String email = req.getParameter("email");
-        String password = req.getParameter("password");
-
-        return authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        email,
-                        password,
-                        new ArrayList<>())
-        );*/
-
         try {
             SystemUser creds = new ObjectMapper()
                     .readValue(req.getInputStream(), SystemUser.class);
@@ -67,7 +52,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throw new RuntimeException(e);
         }
     }
-
 
 
     @Override

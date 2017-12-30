@@ -15,6 +15,7 @@
             <tr>
                 <th>id</th>
                 <th>Nazwa</th>
+                <th>Data modyfikacji</th>
                 <th>Opis</th>
             </tr>
             </thead>
@@ -24,7 +25,10 @@
                     <span th:text="${subject.id}"></span>
                 </td>
                 <td>
-                    <span><a th:href="@{files/by_subject_id(id=${subject.id})}" th:text="${subject.name}"/></span>
+                    <span><a th:href="@{/v1/files/by_subject_id(id=${subject.id})}" th:text="${subject.name}"/></span>
+                </td>
+                <td>
+                    <span th:text="${subject.lastModified.toString()}"></span>
                 </td>
                 <td>
                     <span th:text="${subject.description}"></span>

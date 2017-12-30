@@ -15,6 +15,7 @@
             <tr>
                 <th>id</th>
                 <th>Nazwa</th>
+                <th>Data modyfikacji</th>
                 <th>Opis</th>
                 <th></th>
                 <th></th>
@@ -29,10 +30,13 @@
                     <span th:text="${subject.name}"></span>
                 </td>
                 <td>
+                    <span th:text="${subject.lastModified.toString()}"></span>
+                </td>
+                <td>
                     <span th:text="${subject.description}"></span>
                 </td>
                 <td>
-                    <a th:href="@{/manage_subjects/edit(id=${subject.id})}" class="btn btn-default btn-xs">Edytuj</a>
+                    <a th:href="@{/v1/manage_subjects/edit(id=${subject.id})}" class="btn btn-default btn-xs">Edytuj</a>
                 </td>
                 <td>
                     <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#cancelModal"
@@ -49,7 +53,7 @@
                                     <p>Na pewno chcesz usunąć: "<span th:text="${subject.name}"></span>" ? </p>
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="#" th:action="@{/manage_subjects/delete}" role="form" method="POST">
+                                    <form action="#" th:action="@{/v1/manage_subjects/delete}" role="form" method="POST">
                                         <input type="hidden" name="id" th:value="${subject.id}"/>
                                         <button type="submit" class="btn btn-danger">Tak</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Nie</button>
@@ -63,7 +67,7 @@
             </tbody>
         </table>
     </div>
-    <a href="/subjects/add" th:href="@{/manage_subjects/add}" class="btn btn-success btn-md">Dodaj przedmiot</a>
+    <a href="/subjects/add" th:href="@{/v1/manage_subjects/add}" class="btn btn-success btn-md">Dodaj przedmiot</a>
 </div>
 </body>
 </html>

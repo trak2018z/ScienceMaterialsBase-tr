@@ -40,7 +40,7 @@
                     <span th:text="${system_user.role}"></span>
                 </td>
                 <td>
-                    <a th:href="@{/manage_system_users/edit(id=${system_user.id})}" class="btn btn-default btn-xs">Edytuj</a>
+                    <a th:href="@{/v1/manage_system_users/edit(id=${system_user.id})}" class="btn btn-default btn-xs">Edytuj</a>
                 </td>
                 <td>
                     <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#cancelModal"
@@ -57,7 +57,7 @@
                                     <p>Na pewno chcesz usunąć: "<span th:text="${system_user.name}"></span>" ? </p>
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="#" th:action="@{/manage_system_users/delete}" role="form" method="POST">
+                                    <form action="#" th:action="@{/v1/manage_system_users/delete}" role="form" method="POST">
                                         <input type="hidden" name="id" th:value="${system_user.id}"/>
                                         <button type="submit" class="btn btn-danger">Tak</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Nie</button>

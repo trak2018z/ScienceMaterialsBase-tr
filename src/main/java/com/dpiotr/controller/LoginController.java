@@ -24,7 +24,7 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    @GetMapping("/login")
+    @GetMapping("/v1/login")
     public ModelAndView login() {
         if (loginService.userIsLogged()) {
             return new ModelAndView("redirect:/");
@@ -32,7 +32,7 @@ public class LoginController {
         return new ModelAndView("login", "model", new LoginViewModel());
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/v1/login")
     public ModelAndView logUser(@Valid @ModelAttribute("model") LoginViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes) {
         if (loginService.userIsLogged()) {
             return new ModelAndView("redirect:/");
@@ -40,7 +40,7 @@ public class LoginController {
 
         if (!result.hasErrors()) {
             if (loginService.logUser(model)) {
-                redirectAttributes.addFlashAttribute("message", "Jesteś zalogowany.");
+                redirectAttributes.addFlashAttribute("message", "Zalogowano poprawnie.");
                 return new ModelAndView("redirect:/");
             } else {
                 result.reject("LoginError.incorrectLoginData", "Niepoprawne dane logowania.");
@@ -50,7 +50,7 @@ public class LoginController {
 
     }
 
-    @RequestMapping("/logout")
+    @GetMapping("/v1/logout")
     public ModelAndView logout(final RedirectAttributes redirectAttributes) {
         if (!loginService.userIsLogged()) {
             return new ModelAndView("redirect:/");

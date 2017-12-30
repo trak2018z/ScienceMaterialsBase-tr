@@ -3,6 +3,7 @@ package com.dpiotr.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -24,6 +25,9 @@ public class Subject implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "last_modified")
+    private Date lastModified;
+
     @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<File> files;
 
@@ -31,6 +35,12 @@ public class Subject implements Serializable {
     @JoinTable(name = "subject_to_system_group", joinColumns = @JoinColumn(name = "subject_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "system_group_id", referencedColumnName = "id"))
     private Set<SystemGroup> systemGroups;
+
+    public Subject(String name, String description, Date lastModified) {
+        this.lastModified = lastModified;
+        this.name = name;
+        this.description = description;
+    }
 
     public Subject(String name, String description) {
         this.name = name;
@@ -78,5 +88,13 @@ public class Subject implements Serializable {
 
     public void setFiles(List<File> files) {
         this.files = files;
+    }
+
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
     }
 }

@@ -3,6 +3,7 @@ package com.dpiotr.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by dpiotr on 29.10.17.
@@ -22,6 +23,9 @@ public class File implements Serializable {
     @Column(name = "url")
     @NotNull
     private String url;
+
+    @Column(name = "date_added")
+    private Date dateAdded;
 
     @NotNull
     @ManyToOne
@@ -66,5 +70,13 @@ public class File implements Serializable {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public Date getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Date dateAdded) {
+        this.dateAdded = dateAdded;
     }
 }
