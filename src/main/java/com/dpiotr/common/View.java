@@ -5,4 +5,5 @@ package com.dpiotr.common;
  */
 public class View {
     public interface Default{}
+    public interface withId extends Default{}
 }

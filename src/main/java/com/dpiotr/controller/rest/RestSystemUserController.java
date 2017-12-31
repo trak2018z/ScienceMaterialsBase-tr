@@ -25,11 +25,8 @@ public class RestSystemUserController {
     @Autowired
     SystemUserRepository systemUserRepository;
 
-    @Autowired
-    SystemUserService systemUserService;
-
-    @GetMapping(value = "/rest/getAll")
-    @JsonView(View.Default.class)
+    @GetMapping(value = "/rest/manage_system_users/getAll")
+    @JsonView(View.withId.class)
     public ResponseEntity<List<SystemUser>> getAll() {
         Iterable<SystemUser> result = systemUserRepository.findAll();
         List<SystemUser> systemUsers = new ArrayList<>();
@@ -38,14 +35,14 @@ public class RestSystemUserController {
     }
 
     @GetMapping(value = "/rest/manage_system_users/findById")
-    @JsonView(View.Default.class)
+    @JsonView(View.withId.class)
     public ResponseEntity<SystemUser> findById(@RequestParam("id") long id) {
         SystemUser systemUser = systemUserRepository.findOne(id);
         return new ResponseEntity<SystemUser>(systemUser, HttpStatus.OK);
     }
 
     @GetMapping(value = "/rest/manage_system_users/findByName")
-    @JsonView(View.Default.class)
+    @JsonView(View.withId.class)
     public ResponseEntity<List<SystemUser>> findByName(@RequestParam("name") String name) {
 
         Iterable<SystemUser> result = systemUserRepository.findByName(name);
@@ -56,7 +53,7 @@ public class RestSystemUserController {
     }
 
     @GetMapping(value = "/rest/manage_system_users/findBySurname")
-    @JsonView(View.Default.class)
+    @JsonView(View.withId.class)
     public ResponseEntity<List<SystemUser>> findBySurname(@RequestParam("surname") String surname) {
 
         Iterable<SystemUser> result = systemUserRepository.findBySurname(surname);
@@ -67,7 +64,7 @@ public class RestSystemUserController {
     }
 
     @GetMapping(value = "/rest/manage_system_users/findByEmail")
-    @JsonView(View.Default.class)
+    @JsonView(View.withId.class)
     public ResponseEntity<SystemUser> findByEmail(@RequestParam("email") String email) {
 
         SystemUser result = systemUserRepository.findByEmail(email);

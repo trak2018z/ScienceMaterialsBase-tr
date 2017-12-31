@@ -3,6 +3,7 @@ package com.dpiotr.services;
 import com.dpiotr.model.SystemUser;
 import com.dpiotr.model.viewmodels.SystemUserViewModel;
 import com.dpiotr.repository.SystemUserRepository;
+import com.dpiotr.utilities.PasswordUtilities;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,11 @@ public class SystemUserService implements UserDetailsService {
     }
 
     public void editSystemUser(SystemUser su, SystemUserViewModel suvm){
-        //TODO
+            su.setName(suvm.getName());
+            su.setSurname(suvm.getSurname());
+            su.setEmail(suvm.getEmail());
+            su.setPassword(PasswordUtilities.getHashFor(suvm.getPassword()));
+            su.setRole(suvm.getRole());
+            systemUserRepository.save(su);
     }
 }

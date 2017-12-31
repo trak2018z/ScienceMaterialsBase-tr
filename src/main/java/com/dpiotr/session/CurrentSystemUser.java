@@ -57,4 +57,8 @@ public class CurrentSystemUser {
         systemUser = systemUserRepository.findOne(systemUser.getId());
         return systemUser.getRole().equals("administrator");
     }
+
+    public Long getId(){
+        return systemUser.getId();
+    }
 }

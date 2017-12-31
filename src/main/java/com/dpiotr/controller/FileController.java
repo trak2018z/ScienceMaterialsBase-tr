@@ -53,7 +53,7 @@ public class FileController {
     }
 
     @GetMapping("/v1/files/by_subject_id")
-    public ModelAndView getSubjectsList(@RequestParam("id") Long id) {
+    public ModelAndView getFilesList(@RequestParam("id") Long id) {
         if(loginService.userIsLogged()) {
             return new ModelAndView("files", "files", fileRepository.findAllBySubjectId(id));
         } else throw new AccessForbiddenException();
@@ -63,11 +63,11 @@ public class FileController {
     @GetMapping("/v1/all_files/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-
+        if(loginService.userIsLogged()) {
             Resource file = storageService.loadAsResource(filename);
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                     "attachment; filename=\"" + file.getFilename() + "\"").body(file);
-
+        } else throw new AccessForbiddenException();
     }
 
     @PostMapping("/v1/all_files/subjectid")
@@ -96,7 +96,7 @@ public class FileController {
     }
 
     @RequestMapping(value = "/v1/all_files/delete", method = RequestMethod.POST)
-    public ModelAndView deleteSubject(@RequestParam("id") Long id) {
+    public ModelAndView deleteFile(@RequestParam("id") Long id) {
         if(loginService.adminIsLogged()) {
             File file = fileRepository.findOne(id);
             String filename = file.getUrl();
@@ -104,7 +104,6 @@ public class FileController {
             fileRepository.delete(id);
             return new ModelAndView("redirect:/v1/all_files");
         } else throw new AccessForbiddenException();
-
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)

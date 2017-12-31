@@ -19,7 +19,7 @@ import java.util.Set;
 public class SystemUser implements Serializable {
 
     @Id
-    @JsonView(View.Default.class)
+    @JsonView(View.withId.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -48,6 +48,7 @@ public class SystemUser implements Serializable {
     private String role;
 
     @OneToMany(mappedBy = "systemUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Comment> comments;
 
     public SystemUser(String name, String surname, String email) {

@@ -1,5 +1,9 @@
 package com.dpiotr.model;
 
+import com.dpiotr.common.View;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,23 +19,29 @@ import java.util.Set;
 public class Subject implements Serializable {
 
     @Id
+    @JsonView(View.withId.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
+    @JsonView(View.Default.class)
     @Column(name = "name")
     private String name;
 
+    @JsonView(View.Default.class)
     @Column(name = "description")
     private String description;
 
+    @JsonView(View.Default.class)
     @Column(name = "last_modified")
     private Date lastModified;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "subject", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<File> files;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinTable(name = "subject_to_system_group", joinColumns = @JoinColumn(name = "subject_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "system_group_id", referencedColumnName = "id"))
     private Set<SystemGroup> systemGroups;

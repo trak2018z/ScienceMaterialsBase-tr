@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.8.RELEASE</version>
+        <version>1.5.9.RELEASE</version>
     </parent>
 
     <properties>
@@ -34,7 +34,6 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4-1206-jdbc42</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -49,7 +48,6 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>4.0.3.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>de.malkusch.validation</groupId>
@@ -66,8 +64,6 @@
             <version>0.7.0</version>
         </dependency>
     </dependencies>
-
-
 
     <build>
         <plugins>

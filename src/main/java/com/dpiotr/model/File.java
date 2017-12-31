@@ -1,5 +1,9 @@
 package com.dpiotr.model;
 
+import com.dpiotr.common.View;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -13,23 +17,28 @@ import java.util.Date;
 public class File implements Serializable {
 
     @Id
+    @JsonView(View.withId.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name")
+    @JsonView(View.withId.class)
     @NotNull
     private String name;
 
     @Column(name = "url")
+    @JsonView(View.withId.class)
     @NotNull
     private String url;
 
     @Column(name = "date_added")
+    @JsonView(View.withId.class)
     private Date dateAdded;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "subject_id")
+    @JsonIgnore
     private Subject subject;
 
     public File(String name, String url) {
