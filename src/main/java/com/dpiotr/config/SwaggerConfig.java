@@ -29,7 +29,7 @@ public class SwaggerConfig {
     @Bean
     SecurityConfiguration security() {
         return new SecurityConfiguration(null, null, null, null,
-                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkdWxwaW90ckBnbWFpbC5jb20iLCJleHAiOjE1MTU1MDY1MTh9.UP5qUOghc99pg59G5b6w9ITMA99QBEPY5R5L0TY8yIigdH7tK0r2ZEsKZxakku3r7I33Q-VmRuJTLNeO9K7gwg",
+                "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkdWxwaW90ckBnbWFpbC5jb20iLCJleHAiOjE1MTY5MjkxNDV9.bmtBIktCVvt-KUyMHVF8Mbv1ZYxyUMyNDsUKAmrsQUR0p4Naozi_UnDcHmvtKUPcm-ENqbZrgESsLr_LIPG1_Q",
                 ApiKeyVehicle.HEADER, "Authorization", ",");
     }
 }
