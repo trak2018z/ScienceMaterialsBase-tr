@@ -17,6 +17,7 @@
             <tr>
                 <th>id</th>
                 <th>Nazwa</th>
+                <th>Data dodania</th>
                 <th>Przedmiot</th>
                 <th:block th:if="${beans.currentSystemUser.isAdmin()}">
                     <th></th>
@@ -29,7 +30,10 @@
                     <span th:text="${file.id}"></span>
                 </td>
                 <td>
-                    <span><a th:href="@{'/all_files/' +${file.url}}"  th:text="${file.url}"/></span>
+                    <span><a th:href="@{'/v1/all_files/' +${file.url}}"  th:text="${file.url}"/></span>
+                </td>
+                <td>
+                    <span th:text="${file.dateAdded.toString()}"></span>
                 </td>
                 <td>
                     <span th:text="${file.subject.getName()}"></span>
@@ -50,7 +54,7 @@
                                         <p>Na pewno chcesz usunąć: "<span th:text="${file.name}"></span>" ? </p>
                                     </div>
                                     <div class="modal-footer">
-                                        <form action="#" th:action="@{/all_files/delete}" role="form" method="POST">
+                                        <form action="#" th:action="@{/v1/all_files/delete}" role="form" method="POST">
                                             <input type="hidden" name="id" th:value="${file.id}"/>
                                             <button type="submit" class="btn btn-danger">Tak</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Nie</button>

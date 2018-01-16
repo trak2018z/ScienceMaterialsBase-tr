@@ -1,4 +1,4 @@
-package com.dpiotr.web;
+package com.dpiotr.controller;
 
 /**
  * Created by dpiotr on 29.10.17.
@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 @Controller
 public class FileController {
@@ -44,22 +45,22 @@ public class FileController {
         this.storageService = storageService;
     }
 
-    @GetMapping("/all_files")
+    @GetMapping("/v1/all_files")
     public ModelAndView getFiles() {
         if(loginService.userIsLogged()) {
             return new ModelAndView("all_files", "files", fileRepository.findAll());
         } else throw new AccessForbiddenException();
     }
 
-    @GetMapping("/files/by_subject_id")
-    public ModelAndView getSubjectsList(@RequestParam("id") Long id) {
+    @GetMapping("/v1/files/by_subject_id")
+    public ModelAndView getFilesList(@RequestParam("id") Long id) {
         if(loginService.userIsLogged()) {
             return new ModelAndView("files", "files", fileRepository.findAllBySubjectId(id));
         } else throw new AccessForbiddenException();
 
     }
 
-    @GetMapping("/all_files/{filename:.+}")
+    @GetMapping("/v1/all_files/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
         if(loginService.userIsLogged()) {
@@ -67,10 +68,9 @@ public class FileController {
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                     "attachment; filename=\"" + file.getFilename() + "\"").body(file);
         } else throw new AccessForbiddenException();
-
     }
 
-    @PostMapping("/all_files/subjectid")
+    @PostMapping("/v1/all_files/subjectid")
     public String handleFileUploadBySubjectId(@RequestParam("file") MultipartFile file,
                                    @RequestParam("id") Long subjectid,
                                    RedirectAttributes redirectAttributes) {
@@ -79,28 +79,31 @@ public class FileController {
             storageService.store(file);
             Subject subject = subjectRepository.findOne(subjectid);
             fileToSave.setSubject(subject);
+            Date currentDate = new Date();
+            fileToSave.setDateAdded(currentDate);
+            subject.setLastModified(currentDate);
+            subjectRepository.save(subject);
             if (fileRepository.existsByUrl(fileToSave.getUrl())) {
                 redirectAttributes.addFlashAttribute("message",
                         "Taki plik już już istnieje: " + file.getOriginalFilename() + "!");
-                return "redirect:/files/by_subject_id?id=" + subjectid;
+                return "redirect:/v1/files/by_subject_id?id=" + subjectid;
             }
             fileRepository.save(fileToSave);
             redirectAttributes.addFlashAttribute("message",
                     "Poprawnie dodano " + file.getOriginalFilename() + "!");
-            return "redirect:/files/by_subject_id?id=" + subjectid;
+            return "redirect:/v1/files/by_subject_id?id=" + subjectid;
         } else throw new AccessForbiddenException();
     }
 
-    @RequestMapping(value = "/all_files/delete", method = RequestMethod.POST)
-    public ModelAndView deleteSubject(@RequestParam("id") Long id) {
+    @RequestMapping(value = "/v1/all_files/delete", method = RequestMethod.POST)
+    public ModelAndView deleteFile(@RequestParam("id") Long id) {
         if(loginService.adminIsLogged()) {
             File file = fileRepository.findOne(id);
             String filename = file.getUrl();
             storageService.deleteOne(filename);
             fileRepository.delete(id);
-            return new ModelAndView("redirect:/all_files");
+            return new ModelAndView("redirect:/v1/all_files");
         } else throw new AccessForbiddenException();
-
     }
 
     @ExceptionHandler(StorageFileNotFoundException.class)

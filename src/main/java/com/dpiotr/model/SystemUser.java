@@ -1,6 +1,10 @@
 package com.dpiotr.model;
 
 
+import com.dpiotr.common.View;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,18 +19,22 @@ import java.util.Set;
 public class SystemUser implements Serializable {
 
     @Id
+    @JsonView(View.withId.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
+    @JsonView(View.Default.class)
     @Column(name = "name", nullable = false)
     private String name;
 
     @NotNull
+    @JsonView(View.Default.class)
     @Column(name = "surname")
     private String surname;
 
     @NotNull
+    @JsonView(View.Default.class)
     @Column(name = "email")
     private String email;
 
@@ -35,10 +43,12 @@ public class SystemUser implements Serializable {
     private String password;
 
     @NotNull
+    @JsonView(View.Default.class)
     @Column(name = "role")
     private String role;
 
     @OneToMany(mappedBy = "systemUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Comment> comments;
 
     public SystemUser(String name, String surname, String email) {

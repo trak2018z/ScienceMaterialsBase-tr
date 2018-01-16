@@ -9,7 +9,7 @@
 <nav class="navbar navbar-default" th:replace="fragments/navbar"></nav>
 <div class="container">
     <h1>Edycja przedmiotu</h1>
-    <form action="#" th:action="@{/manage_subjects/edit(id=${subject.id})}" th:object="${subject}" class="form-horizontal"
+    <form action="#" th:action="@{/v1/manage_subjects/edit(id=${subject.id})}" th:object="${subject}" class="form-horizontal"
           enctype="multipart/form-data" role="form" method="POST">
         <div class="form-group">
             <label class="control-label col-sm-2">Nazwa: </label>

@@ -1,4 +1,4 @@
-package com.dpiotr.web;
+package com.dpiotr.controller;
 
 import com.dpiotr.model.viewmodels.RegistrationViewModel;
 import com.dpiotr.repository.SystemUserRepository;
@@ -16,10 +16,11 @@ import javax.validation.Valid;
 /**
  * Created by dpiotr on 20.11.17.
  */
-@RestController
+@Controller
 public class RegistrationController {
 
 
+    private RegistrationService registrationService;
     private final SystemUserRepository systemUserRepository;
     private LoginService loginService;
 
@@ -31,7 +32,7 @@ public class RegistrationController {
         this.loginService = loginService;
     }
 
-    @GetMapping("/register")
+    @GetMapping("/v1/register")
     public ModelAndView register() {
         if (loginService.userIsLogged()) {
             return new ModelAndView("redirect:/");
@@ -39,9 +40,9 @@ public class RegistrationController {
         return new ModelAndView("register", "model", new RegistrationViewModel());
     }
 
-    private RegistrationService registrationService;
 
-    @PostMapping("/register")
+
+    @PostMapping("/v1/register")
     public ModelAndView registerUser(@Valid @ModelAttribute("model") RegistrationViewModel model, final BindingResult result, final RedirectAttributes redirectAttributes) {
         if (loginService.userIsLogged()) {
             return new ModelAndView("redirect:/");
@@ -60,6 +61,6 @@ public class RegistrationController {
         registrationService.registerUser(model);
         redirectAttributes.addFlashAttribute("message", "Zarejestrowano poprawnie. Możesz się zalogować.");
 
-        return new ModelAndView("redirect:/login");
+        return new ModelAndView("redirect:/v1/login");
     }
 }

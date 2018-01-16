@@ -1,0 +1,32 @@
+\0xe0\0x00\0x00\0xe0\0xe0\0xe0\0x00\0x00 - komunikacja 7680
+\0x0f\0xaa\0xcc\0xff\0xff - komunikacja 1200
+0123459:;<=>@ABCDE - błędy
+0x01\0x02 - obroty silnika
+
+
+#include <Arduino.h>
+#include <SoftwareSerial.h>
+
+SoftwareSerial
+    esp8266(2,
+            3); // make RX Arduino line is pin 2, make TX Arduino line is pin 3.
+// This means that you need to connect the TX line from the esp to the Arduino's
+// pin 2
+// and the RX line from the esp to the Arduino's pin 3
+
+void setup() {
+  Serial.begin(9600);
+  esp8266.begin(1200); // your esp's baud rate might be different
+
+  Serial.println("Server Ready");
+}
+
+void loop() {
+  if (esp8266.available()) // check if the esp is sending a message
+  {
+    char a = esp8266.read();
+    Serial.write(a);
+  }
+}
+
+

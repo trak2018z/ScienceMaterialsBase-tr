@@ -16,6 +16,7 @@
             <tr>
                 <th>id</th>
                 <th>Nazwa</th>
+                <th>Data dodania</th>
                 <th>Przedmiot</th>
                 <th:block th:if="${beans.currentSystemUser.isAdmin()}">
                     <th></th>
@@ -28,7 +29,10 @@
                     <span th:text="${file.id}"></span>
                 </td>
                 <td>
-                    <span><a th:href="@{'/all_files/' +${file.url}}"  th:text="${file.url}"/></span>
+                    <span><a th:href="@{'/v1/all_files/' +${file.url}}"  th:text="${file.url}"/></span>
+                </td>
+                <td>
+                    <span th:text="${file.dateAdded.toString()}"></span>
                 </td>
                 <td>
                     <span th:text="${file.subject.getName()}"></span>
@@ -64,7 +68,7 @@
             </tbody>
         </table>
         <th:block th:if="${beans.currentSystemUser.isAdmin()}">
-            <form id="form" method="POST" enctype="multipart/form-data" th:action="@{/all_files/subjectid(id=${param.id[0]})}">
+            <form id="form" method="POST" enctype="multipart/form-data" th:action="@{/v1/all_files/subjectid(id=${param.id[0]})}">
                 <div class="fileinput fileinput-new" data-provides="fileinput">
                     <span class="btn btn-default btn-file"><span>Wybierz plik</span><input type="file" name="file"/></span>
                     <span class="fileinput-filename"></span><span class="fileinput-new">Nie wybrano pliku...</span>
