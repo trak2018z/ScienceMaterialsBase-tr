@@ -42,12 +42,14 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             SystemUser creds = new ObjectMapper()
                     .readValue(req.getInputStream(), SystemUser.class);
 
+
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             creds.getEmail(),
                             creds.getPassword(),
                             new ArrayList<>())
             );
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -61,6 +63,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication auth) throws IOException, ServletException {
 
         String token = Jwts.builder()
+                .claim("authorities", auth.getAuthorities())
                 .setSubject(((User) auth.getPrincipal()).getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -50,6 +51,10 @@ public class SystemUser implements Serializable {
     @OneToMany(mappedBy = "systemUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Comment> comments;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "systemUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<File> files;
 
     public SystemUser(String name, String surname, String email) {
         this.name = name;
@@ -115,5 +120,12 @@ public class SystemUser implements Serializable {
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
-    
+
+    public List<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<File> files) {
+        this.files = files;
+    }
 }

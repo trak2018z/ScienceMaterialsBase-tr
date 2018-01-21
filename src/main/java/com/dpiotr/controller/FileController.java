@@ -9,6 +9,7 @@ import com.dpiotr.model.Subject;
 import com.dpiotr.repository.FileRepository;
 import com.dpiotr.repository.SubjectRepository;
 import com.dpiotr.services.LoginService;
+import com.dpiotr.session.CurrentSystemUser;
 import com.dpiotr.storage.StorageFileNotFoundException;
 import com.dpiotr.storage.StorageService;
 import com.dpiotr.utilities.AccessForbiddenException;
@@ -37,6 +38,9 @@ public class FileController {
 
     @Autowired
     LoginService loginService;
+
+    @Autowired
+    CurrentSystemUser currentSystemUser;
 
     private final StorageService storageService;
 
@@ -79,6 +83,7 @@ public class FileController {
             storageService.store(file);
             Subject subject = subjectRepository.findOne(subjectid);
             fileToSave.setSubject(subject);
+            fileToSave.setSystemUser(currentSystemUser.getSystemUser());
             Date currentDate = new Date();
             fileToSave.setDateAdded(currentDate);
             subject.setLastModified(currentDate);

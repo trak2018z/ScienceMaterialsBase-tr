@@ -41,6 +41,12 @@ public class File implements Serializable {
     @JsonIgnore
     private Subject subject;
 
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "system_user_id")
+    @JsonIgnore
+    private SystemUser systemUser;
+
     public File(String name, String url) {
         this.name = name;
         this.url = url;
@@ -87,5 +93,13 @@ public class File implements Serializable {
 
     public void setDateAdded(Date dateAdded) {
         this.dateAdded = dateAdded;
+    }
+
+    public SystemUser getSystemUser() {
+        return systemUser;
+    }
+
+    public void setSystemUser(SystemUser systemUser) {
+        this.systemUser = systemUser;
     }
 }

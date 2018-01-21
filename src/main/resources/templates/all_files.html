@@ -18,6 +18,7 @@
                 <th>id</th>
                 <th>Nazwa</th>
                 <th>Data dodania</th>
+                <th>Dodane przez</th>
                 <th>Przedmiot</th>
                 <th:block th:if="${beans.currentSystemUser.isAdmin()}">
                     <th></th>
@@ -34,6 +35,9 @@
                 </td>
                 <td>
                     <span th:text="${file.dateAdded.toString()}"></span>
+                </td>
+                <td>
+                    <span th:text="${file.systemUser.getEmail()}"></span>
                 </td>
                 <td>
                     <span th:text="${file.subject.getName()}"></span>

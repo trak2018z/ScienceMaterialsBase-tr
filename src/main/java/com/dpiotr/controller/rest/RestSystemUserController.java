@@ -76,8 +76,10 @@ public class RestSystemUserController {
     @JsonView(View.Default.class)
     public ResponseEntity<SystemUser> save(@RequestBody SystemUser systemUser) {
         systemUser.setPassword(PasswordUtilities.getHashFor(systemUser.getPassword()));
+        if(!systemUserRepository.existsByEmail(systemUser.getEmail())){
         systemUserRepository.save(systemUser);
         return new ResponseEntity<SystemUser>(systemUser, HttpStatus.OK);
+        } else return new ResponseEntity<SystemUser>(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/rest/manage_system_users/delete")

@@ -4,14 +4,16 @@ import com.dpiotr.model.SystemUser;
 import com.dpiotr.model.viewmodels.SystemUserViewModel;
 import com.dpiotr.repository.SystemUserRepository;
 import com.dpiotr.utilities.PasswordUtilities;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
-import static java.util.Collections.emptyList;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dpiotr on 04.12.17.
@@ -30,15 +32,18 @@ public class SystemUserService implements UserDetailsService {
         if (applicationUser == null) {
             throw new UsernameNotFoundException(email);
         }
-        return new User(applicationUser.getEmail(), applicationUser.getPassword(), emptyList());
+        List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
+        grantedAuthorityList.add(new SimpleGrantedAuthority(applicationUser.getRole()));
+
+        return new User(applicationUser.getEmail(), applicationUser.getPassword(), grantedAuthorityList);
     }
 
-    public void editSystemUser(SystemUser su, SystemUserViewModel suvm){
-            su.setName(suvm.getName());
-            su.setSurname(suvm.getSurname());
-            su.setEmail(suvm.getEmail());
-            su.setPassword(PasswordUtilities.getHashFor(suvm.getPassword()));
-            su.setRole(suvm.getRole());
-            systemUserRepository.save(su);
+    public void editSystemUser(SystemUser su, SystemUserViewModel suvm) {
+        su.setName(suvm.getName());
+        su.setSurname(suvm.getSurname());
+        su.setEmail(suvm.getEmail());
+        su.setPassword(PasswordUtilities.getHashFor(suvm.getPassword()));
+        su.setRole(suvm.getRole());
+        systemUserRepository.save(su);
     }
 }
