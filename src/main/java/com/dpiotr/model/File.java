@@ -24,6 +24,7 @@ public class File implements Serializable {
     @Column(name = "name")
     @JsonView(View.withId.class)
     @NotNull
+    @JsonIgnore
     private String name;
 
     @Column(name = "url")
@@ -35,10 +36,10 @@ public class File implements Serializable {
     @JsonView(View.withId.class)
     private Date dateAdded;
 
+    @JsonView(View.withId.class)
     @NotNull
     @ManyToOne
     @JoinColumn(name = "subject_id")
-    @JsonIgnore
     private Subject subject;
 
     @NotNull
