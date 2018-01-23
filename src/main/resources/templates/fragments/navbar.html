@@ -27,7 +27,6 @@
                         <span th:text="${beans.currentSystemUser.systemUser.surname}"></span>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li ><a th:href="@{/v1/manage_system_users/edit(id=${beans.currentSystemUser.systemUser.id})}">Edytuj profil</a></li>
                         <li><a href="/v1/logout">Wyloguj</a></li>
                     </ul>
                 </li>
